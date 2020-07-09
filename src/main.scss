@@ -1,3 +1,38 @@
 body {
-  background: lightblue;
+  color: white;
+  background: #333;
 }
+
+.text-center {
+  text-align: center;
+}
+
+form {
+  max-width: 500px;
+  margin: 0 auto;
+
+  .form-group {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+
+    label {
+      flex-basis: auto;
+      padding: 5px 0;
+    }
+
+    input, select, textarea {
+      flex-basis: 100%;
+    }
+
+    input[type=checkbox] {
+      margin: 8px;
+      flex-basis: auto;
+    }
+
+    button#submit {
+      margin: 0 auto;
+    }
+  }
+}
+

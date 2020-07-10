@@ -14,6 +14,7 @@ export class TextAreaField extends BaseField {
         let el = <HTMLInputElement>document.createElement(this.getType());
         el.name = this.getName();
         el.style.height = this.height;
+        el.innerText = this.value;
 
         return el;
     }

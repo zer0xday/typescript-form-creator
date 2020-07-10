@@ -35,9 +35,18 @@ export class Form {
         return dataContainer;
     }
 
-    protected setFieldData(fieldsArray: BaseField[]): void {
-        fieldsArray.forEach((field: BaseField) => {
+    protected setFieldData(fieldsArray: BaseField[], fieldsData: any = {}): void {
+        fieldsArray.forEach((field: BaseField, index) => {
+            if (Object.keys(fieldsData).length) {
+                field.setValue(fieldsData[index]['value']);
+            }
+
             this.fields.push(field);
+        });
+    }
+
+    protected renderFieldData(): void {
+        this.fields.forEach((field) => {
             this.formElement.append(field.render());
         });
     }
@@ -75,6 +84,7 @@ export class Form {
 
     public render(): HTMLElement {
         this.setFieldData(this.formFields());
+        this.renderFieldData();
 
         this.formElement.append(this.submitBtn);
         this.formElement.append(this.saveBtn);
@@ -123,14 +133,16 @@ export class Form {
 
     public fieldListener(): void {
         this.fields.forEach((field) => {
-            let key = <HTMLInputElement>this.formElement.querySelector(`[name=${field.name}]`);
+            let key =
+                <HTMLInputElement>this.formElement
+                    .querySelector(`[name=${field.name}]`);
             let f = <BaseField>field;
             let val = '';
 
             key.addEventListener('change', () => {
                 switch(field.type) {
                     case FieldTypes.Select:
-                        val = key.querySelector('option:checked').textContent;;
+                        val = key.querySelector('option:checked').textContent;
                         break;
 
                     case FieldTypes.Checkbox:

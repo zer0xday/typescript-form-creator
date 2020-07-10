@@ -16,6 +16,7 @@ export class SelectField extends BaseField {
             let opt = document.createElement('option');
             opt.value = index.toString();
             opt.text = option;
+            opt.selected = opt.text === this.value;
 
             select.append(opt);
         });

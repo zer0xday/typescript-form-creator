@@ -8,4 +8,14 @@ export class CheckboxField extends BaseField{
     constructor(label: string, name: string) {
         super(label, name);
     }
+
+    protected createInput(): HTMLElement {
+        let el = document.createElement('input');
+        el.type = this.getType();
+        el.name = this.getName();
+        el.value = this.getValue();
+        el.checked = this.getValue() === 'Tak';
+
+        return el;
+    }
 }

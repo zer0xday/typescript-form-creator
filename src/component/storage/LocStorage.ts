@@ -14,6 +14,16 @@ export class LocStorage implements IDataStorage {
             : {};
     }
 
+    private setDataToStorage(data: any): void {
+        localStorage[this.FILES_KEY] = JSON.stringify(data);
+    }
+
+    public updateDocument(id: string, data: any): void {
+        this.data[id] = data;
+
+        this.setDataToStorage(this.data);
+    }
+
     public getDocuments(): string[] {
         return Object.keys(this.data);
     }
@@ -25,9 +35,16 @@ export class LocStorage implements IDataStorage {
     public saveDocument(formData: any): string {
         const id = this.generateUid();
         this.data[id] = formData;
-        localStorage[this.FILES_KEY] = JSON.stringify(this.data);
+        this.setDataToStorage(this.data);
 
         return id;
+    }
+
+    public removeDocument(id: string): void {
+        const data = this.getDataFromStorage();
+        delete data[id];
+
+        this.setDataToStorage(data);
     }
 
     protected generateUid(): string {

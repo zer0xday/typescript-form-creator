@@ -61,3 +61,16 @@ form {
   }
 }
 
+.document-list-table {
+  margin: 0 auto;
+  border: 1px solid white;
+
+  td, th {
+    padding: 3px;
+  }
+
+  td:not(:last-child), th {
+    border-bottom: 1px solid white;
+  }
+}
+

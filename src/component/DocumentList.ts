@@ -23,6 +23,7 @@ export class DocumentList {
 
     render(): HTMLElement {
         const table = this.createTable();
+        table.className = 'document-list-table';
 
         this.renderDocumentTableHeader(table);
         this.renderDocumentList(table);

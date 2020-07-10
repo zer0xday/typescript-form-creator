@@ -1,4 +1,5 @@
 import { Form } from "./component/Form";
+import {DocumentList} from "./component/DocumentList";
 
 export class App {
     protected renderForm(form: Form): void {
@@ -16,12 +17,14 @@ export class App {
     }
 
     protected renderDocumentListView() {
-
+        const docs = new DocumentList();
+        document.body.append(docs.render());
     }
 
     public init(): void {
         switch(window.location.pathname) {
             case '/document-list.html':
+                this.renderDocumentListView();
                 break;
 
             case '/new-document.html':

@@ -9,15 +9,23 @@ export class DocumentList {
         return this.documentsList;
     }
 
+    protected renderDocumentTableHeader(table: HTMLTableElement): void {
+        table.append(this.createRow());
+        table.append(this.createHeader('Document ID'));
+    }
+
+    protected renderDocumentList(table: HTMLTableElement): void {
+        this.getDocumentList().forEach((documentId) => {
+            table.append(this.createRow());
+            table.append(this.createCell(documentId));
+        });
+    }
+
     render(): HTMLElement {
         const table = this.createTable();
-        const headerRow = this.createRow();
-        const header = this.createHeader('Document ID');
-        const cellRow = this.createRow();
 
-        table.append(headerRow);
-        table.append(header);
-        table.append(cellRow);
+        this.renderDocumentTableHeader(table);
+        this.renderDocumentList(table);
 
         return table;
     }

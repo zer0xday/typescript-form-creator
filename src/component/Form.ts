@@ -6,15 +6,20 @@ import {SelectField} from "./fields/SelectField";
 import {CheckboxField} from "./fields/CheckboxField";
 import {TextAreaField} from "./fields/TextAreaField";
 import {FieldTypes} from "./FieldTypes";
+import {LocStorage} from "./storage/LocStorage";
 
 export class Form {
     protected formElement: HTMLFormElement;
     public fields: IField[] = [];
     public submitBtn: HTMLButtonElement;
+    public saveBtn: HTMLButtonElement;
+    public backBtn: HTMLElement;
 
     constructor() {
         this.formElement = this.createFormElement();
         this.submitBtn = this.createSubmitButton();
+        this.saveBtn = this.createSaveDocumentButton();
+        this.backBtn = this.createBackButton();
     }
 
     protected getDataContainer(): HTMLElement {
@@ -61,11 +66,40 @@ export class Form {
         ];
     }
 
+    public save(): void {
+        const loc = new LocStorage();
+        loc.saveDocument(this.fields);
+
+        window.location.href = '/index.html';
+    }
+
     public render(): HTMLElement {
         this.setFieldData(this.formFields());
+
         this.formElement.append(this.submitBtn);
+        this.formElement.append(this.saveBtn);
+        this.formElement.append(this.backBtn);
 
         return this.formElement;
+    }
+
+    protected createSaveDocumentButton(): HTMLButtonElement {
+        let btn = document.createElement('button');
+        btn.id = 'saveDocument';
+        btn.textContent = "Zapisz";
+        btn.type = 'button';
+
+        return btn;
+    }
+
+    protected createBackButton(): HTMLElement {
+        let btn = document.createElement('a');
+        btn.className = 'button';
+        btn.id = 'backBtn';
+        btn.textContent = "Wróć";
+        btn.href = '/index.html';
+
+        return btn;
     }
 
     protected createSubmitButton(): HTMLButtonElement {
@@ -81,22 +115,34 @@ export class Form {
         return document.createElement('form');
     }
 
-    public fieldListener() {
+    public saveListener(): void {
+        this.saveBtn.addEventListener('click', () => {
+            this.save();
+        });
+    }
+
+    public fieldListener(): void {
         this.fields.forEach((field) => {
             let key = <HTMLInputElement>this.formElement.querySelector(`[name=${field.name}]`);
+            let f = <BaseField>field;
+            let val = '';
+
             key.addEventListener('change', () => {
                 switch(field.type) {
                     case FieldTypes.Select:
-                        field.value = key.querySelector('option:checked').textContent;
+                        val = key.querySelector('option:checked').textContent;;
                         break;
 
                     case FieldTypes.Checkbox:
-                        field.value = key.checked ? 'Tak' : 'Nie';
+                        val = key.checked ? 'Tak' : 'Nie';
                         break;
 
                     default:
-                        field.value = key.value;
+                        val = key.value;
                 }
+
+                f.setValue(val);
+                field.value = val;
             });
         })
     }

@@ -4,4 +4,5 @@ export interface IField {
     type: string;
     value: string;
     render(): HTMLElement;
+    getValue(): string;
 }

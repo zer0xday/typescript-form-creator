@@ -39,7 +39,11 @@ export class BaseField implements IField {
         return this.type;
     }
 
-    protected getValue() {
+    public setValue(value: string) {
+        this.value = value;
+    }
+
+    public getValue() {
         return this.value;
     }
 

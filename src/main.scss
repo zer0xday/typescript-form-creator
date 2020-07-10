@@ -1,6 +1,24 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   color: white;
   background: #333;
+
+  ul {
+    margin: 0; padding: 0;
+  }
+
+  ul.routes > li {
+    list-style: none;
+    text-align: center;
+    margin: 10px;
+    a {
+      color: red;
+      text-decoration: none;
+    }
+  }
 }
 
 .text-center {
@@ -33,6 +51,13 @@ form {
     button#submit {
       margin: 0 auto;
     }
+  }
+
+  a.button {
+    background: white;
+    color: black;
+    padding: 1px 6px;
+    float: right;
   }
 }
 
